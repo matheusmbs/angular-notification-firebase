@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireMessaging } from '@angular/fire/messaging';
 import { BehaviorSubject } from 'rxjs'
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class MessagingService {
@@ -8,6 +9,7 @@ export class MessagingService {
   constructor(private angularFireMessaging: AngularFireMessaging) {
     this.angularFireMessaging.messaging.subscribe(
       (_messaging) => {
+        _messaging.usePublicVapidKey(environment.firebase.vapidKey);
         _messaging.onMessage = _messaging.onMessage.bind(_messaging);
         _messaging.onTokenRefresh = _messaging.onTokenRefresh.bind(_messaging);
       }
